@@ -18,6 +18,8 @@ The script supports the following 7-Zip previous installations scenarios:
 ├─ sfx_listfile.txt
 ```
 
+The 7-Zip MSI filename is dinamically created by the ``Deploy-Application.ps1`` script following the pattern: ``'7z' + $($appVersion).Replace(".", "") + '.msi'``. The same applies to the x64 MSI package. When a new version of 7-Zip is released, you only need to edit the ``$appVersion`` variable from the script itself.
+
 The ``7-Zip_Customizations.mst`` file (optional - available at http://adriank.org/how-to-deploy-7-zip-9-20/) automatically associates 7-Zip with Windows file type associations to be handled by Windows Explorer.  With no .mst file, ``.7z``, ``.rar`` and other extensions will not associated with 7-zip and we simply cannot open the archive files.
 
 ## Parameters
