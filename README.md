@@ -22,6 +22,8 @@ Variable            | Description
 ``SEVENZPath``      | The folder that contains the 7-Zip (7za.exe) executable.
 ``SEVENZSFXPath``   | The folder that contains the SFX module for installers (7zSD.sfx) file.
 
+You can download any versions of 7-Zip (including latest beta versions) from: https://www.7-zip.org/download.html
+
 Acquiring the ``7zSD.sfx`` stuffs is easy: The installers are on the official download page. Just look for keyword **7-Zip Extra**. Version 9.20 for example is https://www.7-zip.org/a/7z920_extra.7z
 
 ### SFX Build Example
