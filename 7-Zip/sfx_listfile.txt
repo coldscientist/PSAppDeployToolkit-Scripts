@@ -1,0 +1,4 @@
+"Deploy-Application.ps1" "Deploy-Application.ps1"
+"7z1900.msi" "Files/7z1900.msi"
+"7z1900-x64.msi" "Files/7z1900-x64.msi"
+"7-Zip_Customizations.mst" "Files/7-Zip_Customizations.mst"
