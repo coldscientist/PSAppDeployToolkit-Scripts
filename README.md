@@ -70,14 +70,14 @@ copy "C:\Applications\7-Zip\7-Zip_Customizations.mst" "%TEMP%\bat~%RANDOM%\Files
 
 Please note that absolute paths are also supported, e.g. if the line ``"Z:\7-Zip_Customizations.mst" "Files/7-Zip_Customizations.mst"`` is set into ``sfx_listfile.txt``, it will be parsed as ``copy "Z:\7-Zip_Customizations.mst" "%TEMP%\bat~%RANDOM%\Files\7-Zip_Customizations.mst"``.
 
-3. Now the script will compress the contents to %TEMP%\bat~%RANDOM% to "C:\Applications\7-Zip\7-zip.7z".
+3. Now the script will compress the contents to ``%TEMP%\bat~%RANDOM%`` to ``"C:\Applications\7-Zip\7-zip.7z"``.
 
 4. After that, the script will create the SFX file by concatenating these three files:
 
-- ``C:\Application\7zSD.sfx``
-- ``C:\Application\7-Zip\sfx_config.txt``
-- ``C:\Application\7-Zip\7-zip.7z``
+- ``"C:\Application\7zSD.sfx"``
+- ``"C:\Application\7-Zip\sfx_config.txt"``
+- ``"C:\Application\7-Zip\7-zip.7z"``
 
-The file ``C:\Application\7-Zip\sfx_config.txt`` is optional and allows to create a SFX installer with a [Custom Installer config file](https://sevenzip.osdn.jp/chm/cmdline/switches/sfx.htm).
+The file ``"C:\Application\7-Zip\sfx_config.txt"`` is optional and allows to create a SFX installer with a [Custom Installer config file](https://sevenzip.osdn.jp/chm/cmdline/switches/sfx.htm).
 
-If ``C:\Application\7-Zip\sfx_config.txt`` doesn't exists, the script will attempt to use a general ``sfx_config.txt`` file available at the same location of the script. If none of these files exists, the script will fail.
+If ``"C:\Application\7-Zip\sfx_config.txt"`` doesn't exists, the script will attempt to use a general ``sfx_config.txt`` file available at the same location of ``sfx_build.bat`` script. If none of these files exists, the script will fail.
