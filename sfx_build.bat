@@ -126,6 +126,13 @@ if NOT defined SEVENZPath for /f "tokens=2*" %%a in ('reg query "HKEY_LOCAL_MACH
 if NOT defined SEVENZPath for /f "tokens=2*" %%a in ('reg query "HKEY_LOCAL_MACHINE\Software\7-Zip" /v Path64 2^>^&1^|find "REG_"') do @set SEVENZPath=%%b
 if NOT exist "%SEVENZPath%" @set SEVENZPath=%ProgramFiles(x86)%\7-Zip
 if NOT exist "%SEVENZPath%" @set SEVENZPath=%ProgramFiles%\7-Zip
+if NOT exist "%SEVENZPath%" (
+	for %%D in (A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
+		if exist "%%D:\PortableApps\7-ZipPortable\App\7-Zip" (
+			set SEVENZPath=%%D:\PortableApps\7-ZipPortable\App\7-Zip
+		)
+	)
+)
 if NOT exist "%SEVENZPath%" echo "ERROR: 7-Zip could not be found into your system." && exit /b 1
 IF %SEVENZPath:~-1%==\ SET SEVENZPath=%SEVENZPath:~0,-1%
 
