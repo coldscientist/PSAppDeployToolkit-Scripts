@@ -1,12 +1,12 @@
 # PSAppDeployToolkit Deploy-Application.ps1 Scripts
 
-Deployments Scripts using the PowerShell App Deployment Toolkit.
+Deployments Scripts using the [PowerShell App Deployment Toolkit](https://psappdeploytoolkit.com/).
 
 ## SFX Build
 
 *Self-extracting archives (briefly referred as SFX files) are computer executable programs containing both an (usually compressed) archive of files and the routines needed to extract the content (SFX module), usually packed as Microsoft Windows EXE executable file.*
 
-The ``sfx_build.bat`` script creates a self extracting archive containing the contents of ``Toolkit`` directory from [PSAppDeployToolkit](https://psappdeploytoolkit.com/), the ``Deploy-Application.ps1`` specific from the application that are being deployed and the files listed at ``sfx_listfiles.txt``.
+The ``sfx_build.bat`` script creates a self extracting archive containing the contents of ``Toolkit`` directory from PSAppDeployToolkit, the ``Deploy-Application.ps1`` specific from the application that are being deployed and the files listed at ``sfx_listfiles.txt``.
 
 The ``sfx_build.bat`` script uses SFX module for installers (``7zSD.sfx``) that allows you to create your own installation program. Such a module extracts the archive to the user's temp folder, and runs a specified program, and removes the temp files after the program finishes. Parameters could be passed to the ``Deploy-Application.exe`` exe from self extract exe (``[ApplicationName]_sfx_setup.exe``) without any changes to config file.
 
