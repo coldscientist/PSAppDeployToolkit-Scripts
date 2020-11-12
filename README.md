@@ -78,6 +78,4 @@ Please note that absolute paths are also supported, e.g. if the line ``"Z:\7-Zip
 - ``"C:\Application\7-Zip\sfx_config.txt"``
 - ``"C:\Application\7-Zip\7-zip.7z"``
 
-The file ``"C:\Application\7-Zip\sfx_config.txt"`` is optional and allows to create a SFX installer with a [Custom Installer config file](https://sevenzip.osdn.jp/chm/cmdline/switches/sfx.htm).
-
-If ``"C:\Application\7-Zip\sfx_config.txt"`` doesn't exists, the script will attempt to use a general ``sfx_config.txt`` file available at the same location of ``sfx_build.bat`` script. If none of these files exists, the script will fail.
+The file ``"C:\Application\7-Zip\sfx_config.txt"`` allows to create a SFX installer with a [Custom Installer config file](https://sevenzip.osdn.jp/chm/cmdline/switches/sfx.htm). If ``"C:\Application\7-Zip\sfx_config.txt"`` doesn't exists, the script will attempt to use a general ``sfx_config.txt`` file available at the same location of ``sfx_build.bat`` script. If none of these files exists, the script will fail.
