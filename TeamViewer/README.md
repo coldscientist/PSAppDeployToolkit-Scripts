@@ -1,4 +1,4 @@
-# 7-Zip Deployment Script for PSAppDeployToolkit
+# TeamViewer Deployment Script for PSAppDeployToolkit
 
 The ``Deploy-Application.ps1`` script deploy TeamViewer using [PSAppDeployToolkit](https://psappdeploytoolkit.com/).
 
