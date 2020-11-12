@@ -1,6 +1,6 @@
 # PSAppDeployToolkit Deploy-Application.ps1 Scripts
 
-Example Deployments using the PowerShell App Deployment Toolkit.
+Deployments Scripts using the PowerShell App Deployment Toolkit.
 
 ## SFX Build
 
