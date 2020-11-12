@@ -1,0 +1,2 @@
+"Deploy-Application.ps1" "Deploy-Application.ps1"
+"Teamviewer_Setup.exe" "Files/TeamViewer_Setup.exe"
