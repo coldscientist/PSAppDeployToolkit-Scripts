@@ -62,10 +62,10 @@ The ``sfx_build.bat`` will do as following:
 This file specifies which file should be copied to ``%PSAppDeployPath%\Toolkit`` and which location it should be placed. The ``sfx_listfile.txt`` content above will be parsed as:
 
 ```
-copy "C:\Applications\7-Zip\Deploy-Application.ps1" "%TEMP%\bat~%RANDOM%\Deploy-Application.ps1"
-copy "C:\Applications\7-Zip\7z1900.msi" "%TEMP%\bat~%RANDOM%\Files\7z1900.msi"
-copy "C:\Applications\7-Zip\7z1900-x64.msi" "%TEMP%\bat~%RANDOM%\Files\7z1900-x64.msi"
-copy "C:\Applications\7-Zip\7-Zip_Customizations.mst" "%TEMP%\bat~%RANDOM%\Files\7-Zip_Customizations.mst"
+copy /y "C:\Applications\7-Zip\Deploy-Application.ps1" "%TEMP%\bat~%RANDOM%\Deploy-Application.ps1"
+copy /y "C:\Applications\7-Zip\7z1900.msi" "%TEMP%\bat~%RANDOM%\Files\7z1900.msi"
+copy /y "C:\Applications\7-Zip\7z1900-x64.msi" "%TEMP%\bat~%RANDOM%\Files\7z1900-x64.msi"
+copy /y "C:\Applications\7-Zip\7-Zip_Customizations.mst" "%TEMP%\bat~%RANDOM%\Files\7-Zip_Customizations.mst"
 ```
 
 Please note that absolute paths are also supported, e.g. if the line ``"Z:\7-Zip_Customizations.mst" "Files/7-Zip_Customizations.mst"`` is set into ``sfx_listfile.txt``, it will be parsed as ``copy "Z:\7-Zip_Customizations.mst" "%TEMP%\bat~%RANDOM%\Files\7-Zip_Customizations.mst"``.
