@@ -20,7 +20,7 @@ Variable            | Description
 -----------------   | -----------
 ``PSAppDeployPath`` | The folder that contains the PSAppDeployToolkit.
 ``SEVENZPath``      | The folder that contains the 7-Zip (7z.exe) executable. You can download any versions of 7-Zip (including latest beta versions) from: https://www.7-zip.org/download.html
-``SEVENZSFXPath``   | The folder that contains the SFX module for installers (7zSD.sfx) file. Acquiring the ``7zSD.sfx`` stuffs is easy: The installers are on the [official download page](https://www.7-zip.org/download.html). Just look for keyword **7-Zip Extra**. Version 9.20 for example is https://www.7-zip.org/a/7z920_extra.7z
+``SEVENZSFXPath``   | The folder that contains the SFX module for installers (7zSD.sfx) file. Acquiring the ``7zSD.sfx`` stuffs is easy: Just look for keyword **7-Zip Extra** from Version 9.20 on the [official download page](https://www.7-zip.org/download.html).
 
 ### SFX Build Example
 
