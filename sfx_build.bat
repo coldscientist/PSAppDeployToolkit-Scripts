@@ -170,7 +170,7 @@ IF %SEVENZPath:~-1%==\ SET SEVENZPath=%SEVENZPath:~0,-1%
 mkdir "%uniqueFile1%"
 xcopy /cheriky "%PSAppDeployPath%\Toolkit" "%uniqueFile1%"
 
-for %%i in (%InvokedFrom%) do call :ToLowercaseWithFor "%%~nxi" AppPathName
+for %%i in ("%InvokedFrom%") do call :ToLowercaseWithFor "%%~nxi" AppPathName
 call :RenameFile AppPathName %AppPathName%
 echo %AppPathName%
 
@@ -191,7 +191,7 @@ for /f delims^=^"^ tokens^=1^,3 %%A in (%InvokedFromShort%\sfx_listfile.txt) do 
 REM execute batch file created above
 type "%uniqueFile2%.tmp"|cmd
 
-if exist "%InvokedFrom%\%AppPathName%.7z" del /q /f "%InvokedFrom%\%AppPathName%.7z"
+if exist "%temp%\%AppPathName%.7z" del /q /f "%temp%\%AppPathName%.7z"
 REM "%SEVENZPath%\7z.exe" a -r "%InvokedFrom%\%AppPathName%.7z" *.* -i@"%uniqueFile3%.tmp"
 "%SEVENZPath%\7z.exe" a -r "%InvokedFrom%\%AppPathName%.7z" "%uniqueFile1%\*.*"
 set SEVENZSFXConfigPath=%InvokedFrom%
@@ -201,8 +201,9 @@ if NOT exist "%SEVENZSFXConfigPath%\sfx_config.txt" echo.7-Zip SFX config file (
 copy /b "%SEVENZSFXPath%\7zSD.sfx" + "%SEVENZSFXConfigPath%\sfx_config.txt" + "%InvokedFrom%\%AppPathName%.7z" "%InvokedFrom%\%AppPathName%_sfx_setup.exe"
 popd
 
+del /q /f "%temp%\%AppPathName%.7z"
 rd "%uniqueFile1%" /s /q
-del /f "%uniqueFile2%.tmp"
+del /q /f "%uniqueFile2%.tmp"
 REM del /f "%uniqueFile3%.tmp"
 
 goto :EOF
