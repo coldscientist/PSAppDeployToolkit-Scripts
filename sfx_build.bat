@@ -176,20 +176,22 @@ echo %AppPathName%
 
 REM cd /d "%uniqueFile1%"
 call :uniqGet uniqueFile2 "%temp%"
-type NUL > "%uniqueFile2%.tmp"
+type NUL > "%uniqueFile2%.bat"
 for /f delims^=^"^ tokens^=1^,3 %%A in (%InvokedFromShort%\sfx_listfile.txt) do (
 	REM %%A = "7z1900.msi"
 	REM %%B = "Files/7z1900.msi"
 	
+	for %%i in ("%uniqueFile1%\%%~B") do if not exist "%%~dpi" mkdir "%%~dpi"
+	
 	REM If %%A is an absolute path
 	if exist "%%~A" (
-		echo copy /y "%%~A" "%uniqueFile1%\%%~B" >> "%uniqueFile2%.tmp"
+		echo copy /y "%%~A" "%uniqueFile1%\%%~B" >> "%uniqueFile2%.bat"
 	) else (
-		echo copy /y "%InvokedFrom%\%%~A" "%uniqueFile1%\%%~B" >> "%uniqueFile2%.tmp"
+		echo copy /y "%InvokedFrom%\%%~A" "%uniqueFile1%\%%~B" >> "%uniqueFile2%.bat"
 	)
 )
 REM execute batch file created above
-type "%uniqueFile2%.tmp"|cmd
+type "%uniqueFile2%.bat"|cmd
 
 if exist "%temp%\%AppPathName%.7z" del /q /f "%temp%\%AppPathName%.7z"
 REM "%SEVENZPath%\7z.exe" a -r "%temp%\%AppPathName%.7z" *.* -i@"%uniqueFile3%.tmp"
@@ -203,8 +205,7 @@ popd
 
 del /q /f "%temp%\%AppPathName%.7z"
 rd "%uniqueFile1%" /s /q
-del /q /f "%uniqueFile2%.tmp"
-REM del /f "%uniqueFile3%.tmp"
+del /q /f "%uniqueFile2%.bat"
 
 goto :EOF
 
