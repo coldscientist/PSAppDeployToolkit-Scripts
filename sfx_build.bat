@@ -23,7 +23,15 @@ REM DO NOT EDIT BELOW
 REM
 REM
 
-if NOT exist "%PSAppDeployPath%" echo "ERROR: PSAppDeployToolkit directory could not be found at %PSAppDeployPath%." && exit /b 1
+if NOT [%1]==[] set InvokedFrom=%1
+if NOT defined InvokedFrom set "InvokedFrom=%__CD__:~,-1%"
+set InvokedFrom=%InvokedFrom:"=%
+if %InvokedFrom:~-1%==\ SET InvokedFrom=%InvokedFrom:~0,-1%
+
+pushd "%InvokedFrom%"
+for %%i in ("%InvokedFrom%") do set "InvokedFromShort=%%~si"
+
+if NOT exist "%PSAppDeployPath%" echo.ERROR: PSAppDeployToolkit directory could not be found at %PSAppDeployPath%. && exit /b 1
 
 call :uniqGet uniqueFile1 "%temp%"
 
@@ -118,84 +126,80 @@ if NOT defined SEVENZSFXPath (
 			set SEVENZSFXPath=%%D:\PortableApps\7-ZipPortable\App\7-Zip
 		)
 	)
-	if exist "%~dp0\7zSD.sfx" @set SEVENZSFXPath=%~dp0
 )
-if NOT exist "%SEVENZSFXPath%" echo "ERROR: 7zSD.sfx file could not be found into your system." && exit /b 1
+
+if NOT defined SEVENZSFXPath set SEVENZSFXPath=%__CD__:~,-1%
+set countbackslash=0
+for %%a in (%SEVENZSFXPath:\= %) do set /a countbackslash+=1
+
+:SEVENZSFXLoop
+if not exist "%SEVENZSFXPath%\7-Zip\7zSD.sfx" set "SEVENZSFXPath=%SEVENZSFXPath%\.."
+if %countbackslash% GTR 0 set /a countbackslash-=1 & goto :SEVENZSFXLoop
+
+if exist "%SEVENZSFXPath%\7-Zip\7zSD.sfx" set "SEVENZSFXPath=%SEVENZSFXPath%\7-Zip"
+
+if NOT exist "%SEVENZSFXPath%\7zSD.sfx" echo.ERROR: 7zSD.sfx file could not be found into your system. && exit /b 2
 
 if NOT defined SEVENZPath for /f "tokens=2*" %%a in ('reg query "HKEY_CURRENT_USER\Software\7-Zip" /v Path 2^>^&1^|find "REG_"') do @set SEVENZPath=%%b
 if NOT defined SEVENZPath for /f "tokens=2*" %%a in ('reg query "HKEY_CURRENT_USER\Software\7-Zip" /v Path64 2^>^&1^|find "REG_"') do @set SEVENZPath=%%b
 if NOT defined SEVENZPath for /f "tokens=2*" %%a in ('reg query "HKEY_LOCAL_MACHINE\Software\7-Zip" /v Path 2^>^&1^|find "REG_"') do @set SEVENZPath=%%b
 if NOT defined SEVENZPath for /f "tokens=2*" %%a in ('reg query "HKEY_LOCAL_MACHINE\Software\7-Zip" /v Path64 2^>^&1^|find "REG_"') do @set SEVENZPath=%%b
-if NOT exist "%SEVENZPath%" @set SEVENZPath=%ProgramFiles(x86)%\7-Zip
-if NOT exist "%SEVENZPath%" @set SEVENZPath=%ProgramFiles%\7-Zip
-if NOT exist "%SEVENZPath%" (
+if NOT defined if exist "%SEVENZPath%" @set "SEVENZPath=%ProgramFiles(x86)%\7-Zip"
+if NOT defined if exist "%SEVENZPath%" @set "SEVENZPath=%ProgramFiles%\7-Zip"
+if NOT defined if NOT exist "%SEVENZPath%" (
 	for %%D in (A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
 		if exist "%%D:\PortableApps\7-ZipPortable\App\7-Zip" (
 			set SEVENZPath=%%D:\PortableApps\7-ZipPortable\App\7-Zip
 		)
 	)
 )
-if NOT exist "%SEVENZPath%" echo "ERROR: 7-Zip could not be found into your system." && exit /b 1
+
+if NOT defined SEVENZPath set SEVENZPath=%__CD__:~,-1%
+set countbackslash=0
+for %%a in (%SEVENZPath:\= %) do set /a countbackslash+=1
+
+:SEVENZLoop
+if not exist "%SEVENZPath%\7z.exe" set "SEVENZPath=%SEVENZPath%\.."
+if %countbackslash% GTR 0 set /a countbackslash-=1 & goto :SEVENZLoop
+
+if exist "%SEVENZPath%\PortableApps\7-ZipPortable\App\7-Zip" set "SEVENZPath=%SEVENZPath%\PortableApps\7-ZipPortable\App\7-Zip"
+
+if NOT exist "%SEVENZPath%" echo.ERROR: 7-Zip could not be found into your system. && popd & exit /b 3
 IF %SEVENZPath:~-1%==\ SET SEVENZPath=%SEVENZPath:~0,-1%
 
 mkdir "%uniqueFile1%"
 xcopy /cheriky "%PSAppDeployPath%\Toolkit" "%uniqueFile1%"
 
-if [%1]==[] set "InvokedFrom=%1"
-if NOT defined InvokedFrom Set "InvokedFrom=%__CD__:~,-1%"
-for %%i in ("%InvokedFrom%") do call :ToLowercaseWithFor "%%~nxi" AppPathName
+for %%i in (%InvokedFrom%) do call :ToLowercaseWithFor "%%~nxi" AppPathName
 call :RenameFile AppPathName %AppPathName%
 echo %AppPathName%
 
-pushd "%InvokedFrom%"
-for %%i in ("%InvokedFrom%") do set "InvokedFromShort=%%~si"
-
-cd /d "%uniqueFile1%"
+REM cd /d "%uniqueFile1%"
 call :uniqGet uniqueFile2 "%temp%"
 type NUL > "%uniqueFile2%.tmp"
-set /a N=1
-for /f "tokens=* delims= " %%a in (%InvokedFromShort%\sfx_listfile.txt) do (
-    set /a N+=1
-    set line=%%a
-    REM if !line:~0^,1!!line:~-1! equ "" (
-        REM echo -^> String is quoted
-        REM set line=!line:~1!
-		
-		findstr /R /N "^" file.txt
-		
-		set /a M=1
-		FOR /F delims^=^"^ tokens^=1 %%G IN (%InvokedFromShort%\sfx_listfile.txt) DO (
-			set /a M+=1
-			REM echo "N is !N! and M is !M!"
-			if "!N!"=="!M!" (
-				if not exist %%G (
-					if !line:~0^,1!!line:~-1! equ "" set line=!line:~1!
-					set line="%InvokedFrom%\!line!
-				)
-			)
-		)
-		echo(copy /y !line!
-    REM ) ELSE (
-        REM echo -^> String not quoted
-	REM )
-)>>"%uniqueFile2%.tmp"
+for /f delims^=^"^ tokens^=1^,3 %%A in (%InvokedFromShort%\sfx_listfile.txt) do (
+	REM %%A = "7z1900.msi"
+	REM %%B = "Files/7z1900.msi"
+	
+	REM If %%A is an absolute path
+	if exist "%%~A" (
+		echo copy /y "%%~A" "%uniqueFile1%\%%~B" >> "%uniqueFile2%.tmp"
+	) else (
+		echo copy /y "%InvokedFrom%\%%~A" "%uniqueFile1%\%%~B" >> "%uniqueFile2%.tmp"
+	)
+)
+REM execute batch file created above
 type "%uniqueFile2%.tmp"|cmd
 
-REM call :uniqGet uniqueFile3 "%temp%"
-REM type NUL > "%uniqueFile3%.tmp"
-REM Get first word from each line
-REM for /F %%a in (%InvokedFromShort%\sfx_listfile.txt) do echo %%a>>"%uniqueFile3%.tmp"
-
-del /f "%InvokedFrom%\%AppPathName%.7z"
+if exist "%InvokedFrom%\%AppPathName%.7z" del /q /f "%InvokedFrom%\%AppPathName%.7z"
 REM "%SEVENZPath%\7z.exe" a -r "%InvokedFrom%\%AppPathName%.7z" *.* -i@"%uniqueFile3%.tmp"
-"%SEVENZPath%\7z.exe" a -r "%InvokedFrom%\%AppPathName%.7z" *.*
-popd
-
+"%SEVENZPath%\7z.exe" a -r "%InvokedFrom%\%AppPathName%.7z" "%uniqueFile1%\*.*"
 set SEVENZSFXConfigPath=%InvokedFrom%
 if NOT exist "%SEVENZSFXConfigPath%\sfx_config.txt" set SEVENZSFXConfigPath=%~dp0
-if NOT exist "%SEVENZSFXConfigPath%\sfx_config.txt" echo "7-Zip SFX config file (sfx_config.txt) file could not be found." && exit /b 1
+if NOT exist "%SEVENZSFXConfigPath%\sfx_config.txt" echo.7-Zip SFX config file (sfx_config.txt) file could not be found into your system. && exit /b 4
 
 copy /b "%SEVENZSFXPath%\7zSD.sfx" + "%SEVENZSFXConfigPath%\sfx_config.txt" + "%InvokedFrom%\%AppPathName%.7z" "%InvokedFrom%\%AppPathName%_sfx_setup.exe"
+popd
 
 rd "%uniqueFile1%" /s /q
 del /f "%uniqueFile2%.tmp"
