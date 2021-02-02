@@ -192,8 +192,8 @@ REM execute batch file created above
 type "%uniqueFile2%.tmp"|cmd
 
 if exist "%temp%\%AppPathName%.7z" del /q /f "%temp%\%AppPathName%.7z"
-REM "%SEVENZPath%\7z.exe" a -r "%InvokedFrom%\%AppPathName%.7z" *.* -i@"%uniqueFile3%.tmp"
-"%SEVENZPath%\7z.exe" a -r "%InvokedFrom%\%AppPathName%.7z" "%uniqueFile1%\*.*"
+REM "%SEVENZPath%\7z.exe" a -r "%temp%\%AppPathName%.7z" *.* -i@"%uniqueFile3%.tmp"
+"%SEVENZPath%\7z.exe" a -r "%temp%\%AppPathName%.7z" "%uniqueFile1%\*.*"
 set SEVENZSFXConfigPath=%InvokedFrom%
 if NOT exist "%SEVENZSFXConfigPath%\sfx_config.txt" set SEVENZSFXConfigPath=%~dp0
 if NOT exist "%SEVENZSFXConfigPath%\sfx_config.txt" echo.7-Zip SFX config file (sfx_config.txt) file could not be found into your system. && exit /b 4
